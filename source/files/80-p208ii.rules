@@ -1,0 +1,12 @@
+# 80-P208II.rules
+
+ACTION!="add", GOTO="cndrvsane_end"
+SUBSYSTEM=="usb_device", GOTO="cndrvsane_start"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", GOTO="cndrvsane_start"
+GOTO="cndrvsane_end"
+
+LABEL="cndrvsane_start"
+
+ATTR{idVendor}=="1083", ATTR{idProduct}=="165f", MODE="666"
+
+LABEL="cndrvsane_end"

@@ -1,0 +1,10 @@
+Package: SED_SCANNERNAME
+Version: SED_PACKAGEVERSION
+Architecture: all
+Maintainer: SED_MAINTAINER
+Description: Scanner Driver Modules
+Section: net
+Priority: optional
+
+
+
