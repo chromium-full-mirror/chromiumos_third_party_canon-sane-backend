@@ -59,7 +59,7 @@ OBJ=$(SRC:.cpp=.o)
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(CC) $(OPT) -o $(TARGET) $(OBJ) ../../sanesdk/lib/libsanesdk.a $(OPT2) $(LIBPATH) $(LIB) $(LIBA) $(RPATH)
+	$(CC) $(OPT) -o $(TARGET) $(OBJ) $(OPT2) $(LIBPATH) ../../../sanedriver/sanesdk/prj_linux/libsanesdk.a $(OPT2) $(LIB) $(LIBA) $(RPATH)
 	cp $(TARGET) $(TARGETROOT)
 
 .cpp.o:

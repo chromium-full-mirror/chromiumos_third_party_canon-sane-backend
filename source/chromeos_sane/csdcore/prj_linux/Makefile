@@ -55,7 +55,7 @@ OBJ=$(SRC:.cpp=.o)
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(CC) $(OPT) -o $(TARGET) $(OBJ) ../../vscsdsdk/lib/libcsdsdk.a ../../vscsdsdk/lib/libipsdk.a $(OPT2) $(LIBPATH) $(LIB) $(LIBA) $(RPATH)
+	$(CC) $(OPT) -o $(TARGET) $(OBJ) ../../../csdcore/vscsdsdk/prj_csdsdk/prj_linux/libcsdsdk.a ../../../csdcore/vscsdsdk/prj_ipsdk/prj_linux/libipsdk.a $(OPT2) $(LIBPATH) $(LIB) $(LIBA) $(RPATH)
 
 
 .cpp.o:

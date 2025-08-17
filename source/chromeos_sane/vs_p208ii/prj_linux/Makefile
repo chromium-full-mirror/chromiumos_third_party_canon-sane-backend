@@ -72,7 +72,7 @@ OBJ=$(SRC:.cpp=.o)
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(CC) $(OPT) -o $(TARGET) $(OBJ) ../../vscsdsdk/lib/libvssdk.a ../../vscsdsdk/lib/libipsdk.a ../../adjustsdk/lib/LLiPmDRP208.a $(LIBPATH) $(LIB) $(LIBA) $(RPATH)
+	$(CC) $(OPT) -o $(TARGET) $(OBJ) ../../../csdcore/vscsdsdk/prj_vssdk/prj_linux/libvssdk.a ../../../csdcore/vscsdsdk/prj_ipsdk/prj_linux/libipsdk.a ../../adjustsdk/LLiPmDRHachi/LLiPm.linuxproj/Obj/LLiPmDRP208.a ../../../csdcore/vscsdsdk/prj_csdsdk/prj_linux/libcsdsdk.a $(LIBPATH) $(LIB) $(LIBA) $(RPATH)
 
 .cpp.o:
 	$(CC) $(OPT) $(DEF) -c $< $(INC) 
