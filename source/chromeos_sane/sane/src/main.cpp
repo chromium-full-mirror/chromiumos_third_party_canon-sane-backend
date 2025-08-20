@@ -20,13 +20,14 @@ See the LICENSE file for more details.
 #define BACKEND_NAME framework
 #endif
 #endif
-#include "sane/sanei_backend.h"
 #include "sane_ctrl_interface.h"
 #include "devices_interface.h"
 #include "sane_global_apis.h"
 #include "log.h"
 #define VENDOR_ID 0x1083
 #define VENDOR_NAME "Canon"
+#define _STRINGIFY(x) #x
+#define STRINGIFY(x) _STRINGIFY(x)
 namespace {
 	long get_product_id()
 	{
@@ -114,12 +115,15 @@ namespace {
     ISaneDevices* g_devices=NULL;
 }
 
-#ifdef _WIN32
 extern "C" {
-#endif
 //////////////////////////////////////////////////
 // EXPORT APIs
-SANE_Status sane_init(SANE_Int *version_code, SANE_Auth_Callback authorize)
+#define _SANE_OP_FULL(x, op) sane_ ## x ## _##op
+// We need this inner macro for the blue paint rule.
+// See https://en.wikipedia.org/wiki/Painted_blue
+#define _SANE_OP_BACKEND_NAME_EXPANSION(x, op) _SANE_OP_FULL(x, op)
+#define SANE_OP(op) _SANE_OP_BACKEND_NAME_EXPANSION(BACKEND_NAME, op)
+SANE_Status SANE_OP(init)(SANE_Int *version_code, SANE_Auth_Callback authorize)
 {
 	SaneWriteLog_init(STRINGIFY(BACKEND_NAME));
 	SaneWriteLog("%s() start", __func__);
@@ -151,7 +155,7 @@ SANE_Status sane_init(SANE_Int *version_code, SANE_Auth_Callback authorize)
 	SaneWriteLog("%s() end", __func__);
 	return SANE_STATUS_GOOD;
 }
-void sane_exit(void)
+void SANE_OP(exit)(void)
 {
 	SaneWriteLog("%s() start", __func__);
 	if (g_devices) {
@@ -161,7 +165,7 @@ void sane_exit(void)
 	SaneWriteLog("%s() end", __func__);
 	SaneWriteLog_uninit();
 }
-SANE_Status sane_get_devices(const SANE_Device *** device_list, SANE_Bool local_only)
+SANE_Status SANE_OP(get_devices)(const SANE_Device *** device_list, SANE_Bool local_only)
 {
 	SaneWriteLog("%s() start", __func__);
 	SANE_Status status = SANE_STATUS_GOOD;
@@ -198,7 +202,7 @@ SANE_Status sane_get_devices(const SANE_Device *** device_list, SANE_Bool local_
 	SaneWriteLog("%s() end\r\n", __func__);
 	return status;
 }
-SANE_Status sane_open(SANE_String_Const devicename/*ex libusb:001:006*/, SANE_Handle * handle)
+SANE_Status SANE_OP(open)(SANE_String_Const devicename/*ex libusb:001:006*/, SANE_Handle * handle)
 {
 	SaneWriteLog("%s(%s, handle) start", __func__, devicename?devicename:"null");
 	SANE_Status status = SANE_STATUS_GOOD;
@@ -217,7 +221,7 @@ SANE_Status sane_open(SANE_String_Const devicename/*ex libusb:001:006*/, SANE_Ha
 	SaneWriteLog("%s() end: handle is 0x%x\r\n", __func__, *handle);
 	return status;
 }
-void sane_close(SANE_Handle handle)
+void SANE_OP(close)(SANE_Handle handle)
 {
 	SaneWriteLog("%s(0x%x) start", __func__, handle);
 	if (handle == NULL) return;
@@ -225,7 +229,7 @@ void sane_close(SANE_Handle handle)
 	p->Release();
 	SaneWriteLog("%s() end\r\n", __func__);
 }
-const SANE_Option_Descriptor *sane_get_option_descriptor(SANE_Handle handle, SANE_Int option)
+const SANE_Option_Descriptor *SANE_OP(get_option_descriptor)(SANE_Handle handle, SANE_Int option)
 {
 	SaneWriteLog("%s(0x%x, %d) start", __func__, handle, option);
 	if (handle == NULL) return NULL;
@@ -234,7 +238,7 @@ const SANE_Option_Descriptor *sane_get_option_descriptor(SANE_Handle handle, SAN
 	SaneWriteLog("%s() end\r\n", __func__);
 	return out;
 }
-SANE_Status sane_control_option(SANE_Handle handle, SANE_Int option, SANE_Action action, void *value, SANE_Int *info)
+SANE_Status SANE_OP(control_option)(SANE_Handle handle, SANE_Int option, SANE_Action action, void *value, SANE_Int *info)
 {
 	SaneWriteLog("%s(0x%x, %d, %s, 0x%x, 0x%x) start", __func__, handle, option, action == SANE_ACTION_GET_VALUE ? "get" : "set", value, info);
 	SANE_Status status = SANE_STATUS_GOOD;
@@ -244,7 +248,7 @@ SANE_Status sane_control_option(SANE_Handle handle, SANE_Int option, SANE_Action
 	SaneWriteLog("%s() end\r\n", __func__);
 	return status;
 }
-SANE_Status sane_get_parameters(SANE_Handle handle, SANE_Parameters * params)
+SANE_Status SANE_OP(get_parameters)(SANE_Handle handle, SANE_Parameters * params)
 {
 	SaneWriteLog("%s(0x%x) start", __func__, handle);
 	SANE_Status status = SANE_STATUS_GOOD;
@@ -254,7 +258,7 @@ SANE_Status sane_get_parameters(SANE_Handle handle, SANE_Parameters * params)
 	SaneWriteLog("%s end\r\n", __func__);
 	return status;
 }
-SANE_Status sane_start(SANE_Handle handle)
+SANE_Status SANE_OP(start)(SANE_Handle handle)
 {
 	SaneWriteLog("%s(0x%x) start", __func__, handle);
 	SANE_Status status = SANE_STATUS_GOOD;
@@ -264,7 +268,7 @@ SANE_Status sane_start(SANE_Handle handle)
 	SaneWriteLog("%s() end\r\n", __func__);
 	return status;
 }
-SANE_Status sane_read(SANE_Handle handle, SANE_Byte * data, SANE_Int max_length, SANE_Int * length)
+SANE_Status SANE_OP(read)(SANE_Handle handle, SANE_Byte * data, SANE_Int max_length, SANE_Int * length)
 {
 	SaneWriteLog("%s() start", __func__);
 	SANE_Status status = SANE_STATUS_GOOD;
@@ -272,13 +276,13 @@ SANE_Status sane_read(SANE_Handle handle, SANE_Byte * data, SANE_Int max_length,
 	ICeiSane *p = (ICeiSane*)handle;
 	status = p->read(data, max_length, length);
 	if (status) {
-		SaneWriteLog("%s() end\r\n", __func__);
+          SaneWriteLog("%s() end status=%d\r\n", __func__, status);
 	} else {
-		SaneWriteLog("%s() end", __func__);
+          SaneWriteLog("%s() end status=%d", __func__, status);
 	}
 	return status;
 }
-void sane_cancel(SANE_Handle handle)
+void SANE_OP(cancel)(SANE_Handle handle)
 {
 	SaneWriteLog("%s() start", __func__);
 	if (handle == NULL) return;
@@ -286,7 +290,7 @@ void sane_cancel(SANE_Handle handle)
 	p->cancel();
 	SaneWriteLog("%s() end\r\n", __func__);
 }
-SANE_Status sane_set_io_mode(SANE_Handle handle, SANE_Bool non_blocking)
+SANE_Status SANE_OP(set_io_mode)(SANE_Handle handle, SANE_Bool non_blocking)
 {
 	SaneWriteLog("%s() start", __func__);
 	if (handle == NULL) return SANE_STATUS_INVAL;
@@ -295,7 +299,7 @@ SANE_Status sane_set_io_mode(SANE_Handle handle, SANE_Bool non_blocking)
 	SaneWriteLog("%s() end\r\n", __func__);
 	return status;
 }
-SANE_Status sane_get_select_fd(SANE_Handle handle, SANE_Int *fd)
+SANE_Status SANE_OP(get_select_fd)(SANE_Handle handle, SANE_Int *fd)
 {
 	SaneWriteLog("%s() start", __func__);
 	SANE_Status status = SANE_STATUS_GOOD;
@@ -305,7 +309,7 @@ SANE_Status sane_get_select_fd(SANE_Handle handle, SANE_Int *fd)
 	SaneWriteLog("%s() end\r\n", __func__);
 	return status;
 }
-SANE_String_Const sane_strstatus(SANE_Status status)
+SANE_String_Const SANE_OP(strstatus)(SANE_Status status)
 {
 	switch (status) {
 	case SANE_STATUS_GOOD:
@@ -337,6 +341,4 @@ SANE_String_Const sane_strstatus(SANE_Status status)
 	}
 	return "Unknown error";
 }
-#ifdef _WIN32
-} //extern "C" {
-#endif
+}
