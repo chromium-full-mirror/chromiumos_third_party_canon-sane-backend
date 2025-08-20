@@ -153,18 +153,3 @@ cp ../files/drc240.ini ../files/drc230.ini
 cp ../files/drc240.ini ../files/r40.ini
 cp ../files/p208ii.ini ../files/drp208ii.ini
 cp ../files/p215ii.ini ../files/drp215ii.ini
-
-cd deb
-
-./make_deb.sh drm260
-./make_deb.sh p208ii
-./make_deb.sh drp208ii
-./make_deb.sh p215ii
-./make_deb.sh drp215ii
-./make_deb.sh drc225ii
-./make_deb.sh drc230
-./make_deb.sh drc240
-./make_deb.sh r40
-./make_deb.sh r50
-
-cd $CURDIR
