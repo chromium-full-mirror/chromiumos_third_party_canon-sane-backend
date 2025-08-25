@@ -28,7 +28,7 @@ INC=-I../include \
     -I$(SYSROOT)/usr/include
 LIBPATH=-L$(LIBDIR)
         
-RPATH=-Wl,-rpath=./
+RPATH=-Wl,-rpath=\$$ORIGIN
 LIB=
 ARFLAG=rus
 #DEF=-DDEBUG
