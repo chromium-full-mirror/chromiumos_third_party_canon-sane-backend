@@ -185,7 +185,7 @@ namespace {
 				if (ret==CSD_NOPAGE || ret==CSD_NOPAPER) {
 					m_outofdocuments=true;
 					SaneWriteLog(("m_csdcore->CsdReadPgae return no paper"));
-					return SANE_STATUS_GOOD;
+					return SANE_STATUS_NO_DOCS;
 				}
 				SaneWriteLog(("m_csdcore->CsdReadPgae error 0x%ld"), ret);
 				m_options->on_error(ret);
