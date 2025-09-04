@@ -461,10 +461,8 @@ int CCsdCore::probe(LPVSCSD_SDK_INIT_INFORMATION pinfo)
 {
 	SDKWriteLog("CCsdCore::probe() start");
 	if (pinfo->simulation) {
-		m_scanner.reset(create_virtual_scanner(pinfo->pscanner, m_handle));
-		if (m_scanner.get() == NULL) {
-			m_scanner.reset(create_simulation_virtual_scanner(pinfo->pscanner));
-		}
+          	// Should never be reached in ChromeOS
+          	return CSD3_SOFTWARE;
 	}
 	else {
 		m_scanner.reset(create_virtual_scanner(pinfo->pscanner, m_handle));

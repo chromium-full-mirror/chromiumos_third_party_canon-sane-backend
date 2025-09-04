@@ -43,6 +43,5 @@ extern REFIID IID_IInternalVirtualScanner;
 
 
 IVirtualScanner *create_virtual_scanner(IScannerConnector *pscanner, IUnknown *handle);
-IVirtualScanner *create_simulation_virtual_scanner(IScannerConnector *pscanner);
 
 #endif
