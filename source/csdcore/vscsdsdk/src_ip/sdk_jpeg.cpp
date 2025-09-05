@@ -350,9 +350,7 @@ void CCeiLibJpegDll::load()
 		m_hd = LoadLibrary(path);
 	}
 #else
-	char path[256];
-	ceisdk_get_library_path(path);
-	strcat(path, "libjpeg.so");
+	char path[] = "libjpeg.so";
 	m_hd = dlopen(path, RTLD_LAZY);
 #endif
 	if (m_hd == NULL) {

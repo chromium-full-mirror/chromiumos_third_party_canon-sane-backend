@@ -192,7 +192,6 @@ long CCsdVS::init()
 	info.pscanner = m_pscanner;
 	long ret = 0;
 	char path[256];
-	strcpy(path, info.lib_path);
 	char name[32];
 	strcpy(name, info.scanner_name);
 	remove_ch(name, '-');
@@ -203,8 +202,7 @@ long CCsdVS::init()
 #elif __APPLE__
    strcat(path, "vs.framework/vs");
 #else
-    make_path(path, name);
-	strcat(path, "vs.so");
+	snprintf(path, sizeof(path),"%s%s%s", info.lib_path, name, "vs.so");
 #endif
 	ret = m_dll.load(path);
 	if (ret) return ret;

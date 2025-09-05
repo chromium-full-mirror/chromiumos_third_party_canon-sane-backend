@@ -106,10 +106,8 @@ namespace {
     }       
     char *get_driver_library_path(char *lib_path)
     {
-        char pn[32];
-        tolower_str(get_product_name(pn));
-        rm_ch(pn, '-');
-        sprintf(lib_path, "/opt/%s/%s/", VENDOR_NAME, pn);
+        // ChromeOS makes use of the RPATH
+        sprintf(lib_path, "");
         return lib_path;
     }
     ISaneDevices* g_devices=NULL;
