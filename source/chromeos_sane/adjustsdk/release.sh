@@ -4,25 +4,21 @@ CURDIR=`pwd`
 
 cd LLiPmDRHachi/LLiPm.linuxproj
 
-make clean
 
 make DRP208
 
 cp Obj/*.a ../../lib/
 
-make clean
 
 make DRC225
 
 cp Obj/*.a ../../lib/
 
-make clean
 
 make DRP215
 
 cp Obj/*.a ../../lib/
 
-make clean
 
 make DRC240
 

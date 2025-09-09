@@ -10,7 +10,6 @@ echo "SANESDK"
 
 cd prj_linux
 
-make clean
 
 make
 

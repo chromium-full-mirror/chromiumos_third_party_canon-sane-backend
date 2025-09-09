@@ -9,7 +9,6 @@ echo "VSSDK"
 
 cd prj_vssdk/prj_linux
 
-make clean
 
 make
 
@@ -21,7 +20,6 @@ echo "CSDSDK"
 
 cd prj_csdsdk/prj_linux
 
-make clean
 
 make
 
@@ -33,7 +31,6 @@ echo "IPSDK"
 
 cd prj_ipsdk/prj_linux
 
-make clean
 
 make
 

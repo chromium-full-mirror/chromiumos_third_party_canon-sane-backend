@@ -2,7 +2,6 @@
 
 CURDIR=`pwd`
 
-make clean
 
 make
 

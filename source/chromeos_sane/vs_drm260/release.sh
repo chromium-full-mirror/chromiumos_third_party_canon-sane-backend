@@ -4,7 +4,6 @@ CURDIR=`pwd`
 
 cd prj_linux
 
-make clean
 
 make
 

@@ -35,7 +35,6 @@ echo "make CsdCore.so"
 
 cd csdcore/prj_linux
 
-make clean
 
 make
 
@@ -87,61 +86,51 @@ echo "make sane"
 
 cd sane/prj_linux
 
-make clean
 
 make SCANNER=drm260
 
 cp *.so* ../../../files
 
-make clean
 
 make SCANNER=p208ii
 
 cp *.so* ../../../files
 
-make clean
 
 make SCANNER=drp208ii
 
 cp *.so* ../../../files
 
-make clean
 
 make SCANNER=p215ii
 
 cp *.so* ../../../files
 
-make clean
 
 make SCANNER=drp215ii
 
 cp *.so* ../../../files
 
-make clean
 
 make SCANNER=drc225ii
 
 cp *.so* ../../../files
 
-make clean
 
 make SCANNER=drc230
 
 cp *.so* ../../../files
 
-make clean
 
 make SCANNER=drc240
 
 cp *.so* ../../../files
 
-make clean
 
 make SCANNER=r40
 
 cp *.so* ../../../files
 
-make clean
 
 make SCANNER=r50
 
