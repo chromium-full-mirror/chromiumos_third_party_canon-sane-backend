@@ -139,19 +139,15 @@ help:
 DRP215:
 	@make prebuild
 	@make _SCANNER=$@ _CFLAGS= build
-	@make _SCANNER=$@ _NICKNAME=$@ deploy
 DRP208:
 	@make prebuild
 	@make _SCANNER=$@ _CFLAGS= build
-	@make _SCANNER=$@ _NICKNAME=$@ deploy
 DRC225:
 	@make prebuild
 	@make _SCANNER=$@ _CFLAGS= build
-	@make _SCANNER=$@ _NICKNAME=$@ deploy
 DRC240:
 	@make prebuild
 	@make _SCANNER=$@ _CFLAGS= build
-	@make _SCANNER=$@ _NICKNAME=$@ deploy
 
 prebuild:
 	@echo 'Target environment:'
@@ -186,9 +182,6 @@ else
 	@echo '  libjpeg                        no'
 endif
 	@echo ''
-
-deploy:
-	@tar cvzf LLiPm$(_SCANNER).tar.gz -C $(OBJPATH) LLiPm$(_SCANNER).a -C ../../.. include/ceidef.h include/CeiImg.h include/ceiinf.h include/NormalFilterInfo.h include/$(_NICKNAME)FilterInfo.h include/LLiPm$(_NICKNAME).h
 
 clean:
 	@if test -d $(OBJPATH); then rm -rf $(OBJPATH)/*.[oa]; rmdir $(OBJPATH); else :; fi
