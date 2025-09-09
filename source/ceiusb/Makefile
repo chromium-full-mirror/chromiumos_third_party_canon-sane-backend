@@ -1,7 +1,6 @@
 VERSION=1.0
 CC:=$(CC)
 CXX:=$(CXX)
-SYSROOT=
 
 PROGRAM=CeiUSBLinux.so
 OBJS=CeiUSB_libusb.o
@@ -30,7 +29,7 @@ INCLUDE=-I/usr/local/include
 CPPFLAGS=-Wall -O2 -Wno-write-strings -fPIC -shared --sysroot=$(SYSROOT)
 else
 OBJS2=-lusb-1.0
-INCLUDE=-I/usr/include/libusb-1.0
+INCLUDE=-I$(SYSROOT)usr/include/libusb-1.0
 CPPFLAGS=-Wall -O2 -Wno-write-strings -fPIC -shared --sysroot=$(SYSROOT) -Wl,-soname,$(PROGRAM).$(VERSION)
 endif
 endif

@@ -6,7 +6,6 @@ TARGET=libcsdsdk.a
 #-----------------------
 # Default Parameters
 #-----------------------
-SYSROOT=
 CC=$(CXX)
 OPT=-Wall -O2 -fPIC -std=c++11
 

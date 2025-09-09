@@ -9,7 +9,6 @@ VERSION=1.0.0
 #-----------------------
 # Default Parameters
 #-----------------------
-SYSROOT=
 
 CC=$(CXX)
 OPT=-shared -Wall -O2 -fPIC -pthread -std=c++11 -Wl,-soname,$(TARGET).$(VERSION)
@@ -17,8 +16,7 @@ OPT=-shared -Wall -O2 -fPIC -pthread -std=c++11 -Wl,-soname,$(TARGET).$(VERSION)
 INC=-I../include \
     -I../../vscsdsdk/include \
     -I$(SYSROOT)/usr/include
-LIBPATH=-L/usr/lib \
-	-L$(SYSROOT)/usr/lib
+LIBPATH=-L$(LIBDIR)
         
 RPATH=-Wl,-rpath=./
 LIB=

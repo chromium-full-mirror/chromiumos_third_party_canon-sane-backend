@@ -10,7 +10,6 @@ else
 	OS:=linux
 endif
 ARCH:=$(shell $(CC) -dumpmachine | sed -e 's/^\([^-]*\).*/\1/')
-SYSROOT:=
 USE_PAF:=no
 USE_SBLANK:=no
 LINK_LIBJPEG:=static
@@ -41,17 +40,8 @@ ifneq ($(findstring yes,$(USE_PAF)),)
 	endif
 endif
 
-INCJPEG:=
-INCJPEG_DIR:=$(INC_DIR)/libjpeg
-LIBJPEG:=
-LIBJPEG_DIR:=$(LIB_DIR)
-ifneq ($(findstring -DJPEG_,$(_CFLAGS)),)
-	ifneq ($(findstring static,$(LINK_LIBJPEG)),)
-		INCJPEG=-I"$(INCJPEG_DIR)"
-	else
-		LIBJPEG=-ljpeg
-	endif
-endif
+LIBJPEG:=-ljpeg
+LIBJPEG_DIR:=$(LIBDIR) # ebuild exported env var
 
 CFLAGS:=
 ifneq ($(findstring arm,$(ARCH)),)

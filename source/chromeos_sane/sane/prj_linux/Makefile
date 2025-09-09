@@ -11,7 +11,6 @@ TARGET=libsane-$(SCANNER).so.1
 #-----------------------
 # Default Parameters
 #-----------------------
-SYSROOT=
 
 CC=$(CXX)
 OPT=-shared -Wall -O2 -fPIC -pthread -std=c++11 -DSANE_INIT_VERSION=$(VERSION) -Wl,-soname,$(TARGET).$(VERSION)
@@ -22,8 +21,7 @@ INC=-I../include \
 	-I../../sane-backends/include \
     -I../../sanesdk/include \
     -I$(SYSROOT)/usr/include
-LIBPATH=-L/usr/lib \
-	-L$(SYSROOT)/usr/lib
+LIBPATH=-L$(LIBDIR)
         
 RPATH=-Wl,-rpath=./
 LIB=
