@@ -1,6 +1,6 @@
 # User variables
-CC:=gcc
-CXX:=g++
+CC:=$(CC)
+CXX:=$(CXX)
 AR:=ar
 
 TRIPLET:=$(shell $(CC) -dumpmachine)

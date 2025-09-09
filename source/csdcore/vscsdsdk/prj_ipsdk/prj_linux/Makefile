@@ -7,10 +7,9 @@ TARGET=libipsdk.a
 # Default Parameters
 #-----------------------
 SYSROOT=
-CC=g++
+CC=$(CXX)
 OPT=-Wall -O2 -fPIC -std=c++11
 INC=-I../../include
-AR=ar
 ARFLAG=rus
 DEF=
 #-----------------------
@@ -56,7 +55,7 @@ atom: all
 
 $(TARGET): $(OBJ)
 	$(AR) $(ARFLAG) $(TARGET) $(OBJ)
-	ranlib $(TARGET)
+	$(RANLIB) $(TARGET)
 	cp $(TARGET) $(TARGETROOT)
 
 .cpp.o:

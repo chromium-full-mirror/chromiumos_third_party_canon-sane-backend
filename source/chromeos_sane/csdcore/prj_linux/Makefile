@@ -8,7 +8,7 @@ VERSION=1.0.0
 # Default Parameters
 #-----------------------
 SYSROOT=
-CC=g++
+CC=$(CXX)
 OPT=-shared -Wall -O2 -fPIC -pthread -std=c++11 -Wl,-soname,$(TARGET).$(VERSION)
 OPT2=-ldl
 
@@ -20,7 +20,6 @@ LIBPATH=-L/usr/lib \
         
 RPATH=-Wl,-rpath=./
 LIB=
-AR=ar
 ARFLAG=rus
 #DEF=-DDEBUG
 DEF=

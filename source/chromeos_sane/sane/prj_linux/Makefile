@@ -13,7 +13,7 @@ TARGET=libsane-$(SCANNER).so.1
 #-----------------------
 SYSROOT=
 
-CC=g++
+CC=$(CXX)
 OPT=-shared -Wall -O2 -fPIC -pthread -std=c++11 -DSANE_INIT_VERSION=$(VERSION) -Wl,-soname,$(TARGET).$(VERSION)
 OPT2=-ldl
 
@@ -27,7 +27,6 @@ LIBPATH=-L/usr/lib \
         
 RPATH=-Wl,-rpath=./
 LIB=
-AR=ar
 ARFLAG=rus
 #DEF=-DDEBUG
 DEF=-DBACKEND_NAME=$(SCANNER)

@@ -1,6 +1,6 @@
 VERSION=1.0
-CC:=gcc
-CXX:=g++
+CC:=$(CC)
+CXX:=$(CXX)
 SYSROOT=
 
 PROGRAM=CeiUSBLinux.so
@@ -9,8 +9,8 @@ OBJS=CeiUSB_libusb.o
 
 ifneq ($(findstring celp-project0,$(SYSROOT)),)
 CELP=yes
-CC=arm-none-linux-gnueabi-gcc
-CXX=arm-none-linux-gnueabi-g++
+CC=$(CC)
+CXX=$(CXX)
 else
 CELP=no
 endif
