@@ -7,7 +7,7 @@ TARGET=libipsdk.a
 # Default Parameters
 #-----------------------
 CC=$(CXX)
-OPT=-Wall -O2 -fPIC -std=c++11
+OPT=$(CPPFLAGS) -Wall -O2 -fPIC -std=c++11
 INC=-I../../include
 ARFLAG=rus
 DEF=

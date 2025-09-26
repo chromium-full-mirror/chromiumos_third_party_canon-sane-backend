@@ -21,16 +21,16 @@ UNAME_P := $(shell uname -p)
 ifeq ($(CELP),yes)
 OBJS2=-lusb-1.0
 INCLUDE=-I$(SYSROOT)usr/include/libusb-1.0
-CPPFLAGS=-march=armv7-a -mfloat-abi=hard -mfpu=neon -Wall -O2 -Wno-write-strings -fPIC -shared --sysroot=$(SYSROOT) -Wl,-soname,$(PROGRAM).$(VERSION)
+CPPFLAGS+=-march=armv7-a -mfloat-abi=hard -mfpu=neon -Wall -O2 -Wno-write-strings -fPIC -shared --sysroot=$(SYSROOT) -Wl,-soname,$(PROGRAM).$(VERSION)
 else
 ifeq ($(UNAME_S),Darwin)
 OBJS2=/usr/local/lib/libusb-1.0.a -lobjc -framework CoreFoundation -framework IOKit 
 INCLUDE=-I/usr/local/include
-CPPFLAGS=-Wall -O2 -Wno-write-strings -fPIC -shared --sysroot=$(SYSROOT)
+CPPFLAGS+=-Wall -O2 -Wno-write-strings -fPIC -shared --sysroot=$(SYSROOT)
 else
 OBJS2=-lusb-1.0
 INCLUDE=-I$(SYSROOT)usr/include/libusb-1.0
-CPPFLAGS=-Wall -O2 -Wno-write-strings -fPIC -shared --sysroot=$(SYSROOT) -Wl,-soname,$(PROGRAM).$(VERSION)
+CPPFLAGS+=-Wall -O2 -Wno-write-strings -fPIC -shared --sysroot=$(SYSROOT) -Wl,-soname,$(PROGRAM).$(VERSION)
 endif
 endif
 

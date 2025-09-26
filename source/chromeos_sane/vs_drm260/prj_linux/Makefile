@@ -11,7 +11,7 @@ VERSION=1.0.0
 #-----------------------
 
 CC=$(CXX)
-OPT=-shared -Wall -O2 -fPIC -pthread -std=c++11 -Wl,-soname,$(TARGET).$(VERSION)
+OPT=$(CPPFLAGS) -shared -Wall -O2 -fPIC -pthread -std=c++11 -Wl,-soname,$(TARGET).$(VERSION)
 
 INC=-I../include \
     -I../../vscsdsdk/include \

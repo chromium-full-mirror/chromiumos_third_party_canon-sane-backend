@@ -10,7 +10,7 @@ TARGET=libsanesdk.a
 #-----------------------
 
 CC=$(CXX)
-OPT=-Wall -O2 -fPIC -std=c++11
+OPT=$(CPPFLAGS) -Wall -O2 -fPIC -std=c++11
 
 INC=-I../include \
 	-I$(SYSROOT)/usr/include

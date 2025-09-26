@@ -19,7 +19,7 @@ LINK_LIBJPEG:=static
 _SCANNER:=
 _NICKNAME:=
 _CFLAGS:=
-_CFLAGS2:=
+_CFLAGS2:=$(CPPFLAGS)
 
 # Build variables
 TARGET=$(OBJPATH)/LLiPm$(_SCANNER).a

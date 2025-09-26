@@ -8,7 +8,7 @@ VERSION=1.0.0
 # Default Parameters
 #-----------------------
 CC=$(CXX)
-OPT=-shared -Wall -O2 -fPIC -pthread -std=c++11 -Wl,-soname,$(TARGET).$(VERSION)
+OPT=$(CPPFLAGS) -shared -Wall -O2 -fPIC -pthread -std=c++11 -Wl,-soname,$(TARGET).$(VERSION)
 OPT2=-ldl
 
 INC=-I../include \

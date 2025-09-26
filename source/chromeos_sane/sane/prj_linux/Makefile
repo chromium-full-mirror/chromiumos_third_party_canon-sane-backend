@@ -13,7 +13,7 @@ TARGET=libsane-$(SCANNER).so.1
 #-----------------------
 
 CC=$(CXX)
-OPT=-shared -Wall -O2 -fPIC -pthread -std=c++11 -DSANE_INIT_VERSION=$(VERSION) -Wl,-soname,$(TARGET).$(VERSION)
+OPT=$(CPPFLAGS) -shared -Wall -O2 -fPIC -pthread -std=c++11 -DSANE_INIT_VERSION=$(VERSION) -Wl,-soname,$(TARGET).$(VERSION)
 OPT2=-ldl
 
 INC=-I../include \
