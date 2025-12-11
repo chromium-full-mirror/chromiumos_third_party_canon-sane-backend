@@ -69,7 +69,7 @@ namespace {
     bool no_ini_file()
     {
         char path[256] = { 0 };
-        bool out = !FileFound(ceisdk_get_ini_path(path));
+        bool out = !FileFound(ceisdk_get_ini_path(path, sizeof(path)));
         if (out) {
             printf("%s is not found\r\n", path);
         }

@@ -158,17 +158,16 @@ void  ceisdk_set_library_path(char *s)
 		}
 	}
 }
-char *ceisdk_get_ini_path(char *s)
+char *ceisdk_get_ini_path(char *s, size_t size)
 {
-	ceisdk_get_library_path(s);
+	snprintf(s, size, "%s/", "/run/imageloader/sane-backends-canon/package/root/canonlibs");
 	char *n = ceisdk_get_scanner_name();
 	if (n[0]) {
-		strcat(s, n);
-		strcat(s, ".ini");
+		strncat(s, n, size - strlen(s));
+		strncat(s, ".ini", size - strlen(s));
 	}
 	else {
-		strcat(s, n);
-		strcat(s, "profiles.ini");
+		strncat(s, "profiles.ini", size - strlen(s));
 	}
 	static bool c_once = true;
 	if (c_once) {
@@ -216,12 +215,12 @@ long ceisdk_write_private_profile_string(const char *section_name, const char *k
 long ceisdk_get_private_profile_string(const char *section_name, const char *key, char *returned_string, long size_of_returned_string, const char *def)
 {
 	char path[256] = { 0 };
-	return ceisdk_get_private_profile_string(section_name, key, returned_string, size_of_returned_string, def, ceisdk_get_ini_path(path));
+	return ceisdk_get_private_profile_string(section_name, key, returned_string, size_of_returned_string, def, ceisdk_get_ini_path(path, sizeof(path)));
 }
 long ceisdk_write_private_profile_string(const char *section_name, const char *key, char *in_string)
 {
 	char path[256] = { 0 };
-	return ceisdk_write_private_profile_string(section_name, key, in_string, ceisdk_get_ini_path(path));
+	return ceisdk_write_private_profile_string(section_name, key, in_string, ceisdk_get_ini_path(path, sizeof(path)));
 }
 int ceisdk_get_private_profile_int(const char *section_name, const char *key, int ndefault)
 {

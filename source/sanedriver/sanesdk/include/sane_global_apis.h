@@ -13,7 +13,7 @@ char *ceisdk_get_scanner_name();
 char *ceisdk_get_temp_folderpath(char *s);
 char *ceisdk_get_library_path(char *s);
 void  ceisdk_set_library_path(char *s);
-char *ceisdk_get_ini_path(char *s);
+char *ceisdk_get_ini_path(char *s, size_t size);
 long ceisdk_get_private_profile_string(const char *section_name, const char *key, char *returned_string, long size_of_returned_string, const char *def="");
 int ceisdk_get_private_profile_int(const char *section_name, const char *key, int ndefault=0);
 double ceisdk_get_private_profile_double(const char *section_name, const char *key, double ndefault=0.0);

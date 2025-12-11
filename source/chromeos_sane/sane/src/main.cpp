@@ -26,6 +26,7 @@ See the LICENSE file for more details.
 #include "log.h"
 #define VENDOR_ID 0x1083
 #define VENDOR_NAME "Canon"
+#define INI_FILE_PATH "/run/imageloader/sane-backends-canon/package/root/canonlibs"
 #define _STRINGIFY(x) #x
 #define STRINGIFY(x) _STRINGIFY(x)
 namespace {
@@ -33,21 +34,21 @@ namespace {
 	{
 		char s[8]={0};
 		char path[256]={0};
-		sprintf(path, "/opt/" VENDOR_NAME "/%s/%s.sane.ini", STRINGIFY(BACKEND_NAME), STRINGIFY(BACKEND_NAME));
+		sprintf(path, "%s/%s.sane.ini", INI_FILE_PATH, STRINGIFY(BACKEND_NAME));
 		sanesdk::ceisdk_get_private_profile_string("SANE", "pid", s, sizeof(s), "5741", path);
 		return atol(s);
 	}
 	char *get_product_name(char *s)
 	{
 		char path[256]={0};
-		sprintf(path, "/opt/" VENDOR_NAME "/%s/%s.sane.ini", STRINGIFY(BACKEND_NAME), STRINGIFY(BACKEND_NAME));
+		sprintf(path, "%s/%s.sane.ini", INI_FILE_PATH, STRINGIFY(BACKEND_NAME));
 		sanesdk::ceisdk_get_private_profile_string("SANE", "name", s, 32, "DR-M260", path);
 		return s;
 	}
 	char *get_type_desc(char *s)
 	{
 		char path[256]={0};
-		sprintf(path, "/opt/" VENDOR_NAME "/%s/%s.sane.ini", STRINGIFY(BACKEND_NAME), STRINGIFY(BACKEND_NAME));
+		sprintf(path, "%s/%s.sane.ini", INI_FILE_PATH, STRINGIFY(BACKEND_NAME));
 		sanesdk::ceisdk_get_private_profile_string("SANE", "type", s, 32, "sheetfed scanner", path);
 		return s;
 	}
