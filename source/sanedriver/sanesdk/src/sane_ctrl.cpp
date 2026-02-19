@@ -432,6 +432,7 @@ long CSaneCtrl::init(const char *dev, const char *scanner_name/*DR-M260*/, const
 void CSaneCtrl::uninit()
 {
 	SaneWriteLog("CSaneCtrl::uninit() start");
+	m_scan.reset(NULL);
 	m_csdcore.reset(NULL);
 	SaneWriteLog("CSaneCtrl::uninit() end");
 }
