@@ -4,6 +4,8 @@ See the LICENSE file for more details.
 */
 #include <cstddef>
 #include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>
 #ifdef _WIN32
 #include <Windows.h>
 #endif

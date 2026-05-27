@@ -15,6 +15,7 @@ See the LICENSE file for more details.
 #endif
 #include <string.h>
 #include <fcntl.h>
+#include <stdio.h>
 
 
 //semaphore
