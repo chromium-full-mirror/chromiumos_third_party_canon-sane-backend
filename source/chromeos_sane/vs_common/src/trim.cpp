@@ -39,9 +39,14 @@ const long VALID_WIDTH_MUD = 5104;
 void trim_invalid_pixel_gray_or_lineorder_color(ICeiImage **ppInOut)
 {
 	ICeiImage *in = *ppInOut;
+	long new_width = VALID_WIDTH_MUD * in->xdpi() / MUD;
+	long offset = dummy_pixel_600dpi() * in->xdpi() / MUD;
+	if ((offset < 0) || (offset + new_width > in->sync())) {
+		return; // device-reported width too small for fixed sensor stride
+	}
 	CVSCSDSDKImage *p = create_vscsdsdk_image();
 	if (p) {
-		p->width(VALID_WIDTH_MUD * in->xdpi() / MUD);
+		p->width(new_width);
 		p->height(in->height());
 		p->spp(in->spp());
 		p->bps(in->bps());
@@ -49,7 +54,7 @@ void trim_invalid_pixel_gray_or_lineorder_color(ICeiImage **ppInOut)
 		p->ydpi(in->ydpi());
 		p->sync(p->width());
 		p->attach(in, p->sync()*p->height()*p->spp());
-		char *src = p->img() + dummy_pixel_600dpi() * in->xdpi() / MUD;
+		char *src = p->img() + offset;
 		char *dst = p->img(); 
 		long hmax = p->height()*p->spp();
 		for (long h=0; h<hmax; h++) {
