@@ -379,6 +379,22 @@ void CCollectArray::Extend12To16BitAndArrayCollect(unsigned short* lpDst, unsign
     
     const unsigned int* dummy = NULL;
 
+    // lpDst/lpTmp are sized from a device-supplied width but the
+    // re-order tables below assume a full sensor row (5104 px @600dpi /
+    // 2552 px @300dpi). Reject undersized rows to prevent heap OOB write/read.
+    {
+        const unsigned int* tbl = (xRes == 300) ? unSensor300Table[nSensorVer]
+                                                : unSensor600Table[nSensorVer];
+        const unsigned int* off = (xRes == 300) ? unDst300ParaOffset[nSensorVer]
+                                                : unDst600ParaOffset[nSensorVer];
+        long need = (long)(tbl[0] + tbl[1] + tbl[2]) * 3;        // lpTmp reads
+        if ((long)(off[0] + 1) > need) need = (long)(off[0] + 1); // lpDst writes
+        if (lWidth < need) {
+            delete [] lpTmp;
+            return;
+        }
+    }
+
     unsigned short* lpDat = lpTmp;
     if (xRes == 300)
     {
