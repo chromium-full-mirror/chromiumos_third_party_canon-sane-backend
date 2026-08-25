@@ -178,9 +178,12 @@ namespace {
 		}
 		long xdpi = window.xdpi();
 		char* dst[2] = { pfront->img(), pback->img() };
+		char* dst_end[2] = { pfront->img() + pfront->size(),
+				     pback->img() + pback->size() };
 		long offset = dummy_pixel_600dpi() * xdpi / 600;
 		CLine line(stream_list);
-		while (line.hasnext()) {
+		while (line.hasnext() && dst[FRONT] + width <= dst_end[FRONT]
+				      && dst[BACK]  + width <= dst_end[BACK]) {
 			line.read(pline[BOTH], line_size);
 			sort_duplex_line(pline[FRONT], pline[BACK], pline[BOTH], xdpi);
 			memcpy(dst[FRONT], pline[FRONT] + offset, width);
