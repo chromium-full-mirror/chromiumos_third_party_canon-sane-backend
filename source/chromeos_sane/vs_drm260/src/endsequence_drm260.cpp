@@ -243,6 +243,17 @@ void CFrameworkEndSequence::make_image(ICeiImage** ppOut, long back)
 		Set2BYTE(app0, 14, w_to_scanner.ydpi());
 		total = total_size(back) + sizeof(app0) + sizeof(eof_ffd9);
 	}
+	// Clamp device-reported geometry to the number of bytes actually
+	// received. Without this, ceisdk_change_sync()/vs_invert_black_and_white()
+	// walk height*sync bytes of a `total`-byte allocation (heap OOB write).
+	// Only clamp geometry for uncompressed (raw) image transfers.
+	if ((pimg->comptype() == 0) && (pimg->sync() > 0)) {
+		long max_h = total / pimg->sync();
+		if (pimg->height() > max_h) {
+			pimg->height(max_h);
+		}
+	}
+
 	pimg->size(total);
 	if (w_to_scanner.compression_type() == 0) {
 		int index = 0;
