@@ -626,7 +626,19 @@ long ceisdk_jpeg_decomp(LPCEICSDSDKJPEGIMAGEINFO dst, LPCEICSDSDKJPEGIMAGEINFO s
 	pdll->jpeg_create_decompress(&cinfo);
 	pdll->jpeg_mem_src(&cinfo, src->lpImage, (unsigned long)src->tImageSize);
 	pdll->jpeg_read_header(&cinfo, TRUE);
+	// Device-supplied JPEGs must be grayscale (1-component) or 3-component;
+	// anything else (CMYK/YCCK/unknown) would make jpeg_read_scanlines() write
+	// output_width*output_components bytes per row into a width*3 buffer.
+	if (cinfo.num_components != 1 && cinfo.num_components != 3) {
+		pdll->jpeg_destroy_decompress(&cinfo);
+		return EINVAL;
+	}
 	pdll->jpeg_start_decompress(&cinfo);
+	if (cinfo.output_components != 1 && cinfo.output_components != 3) {
+		pdll->jpeg_finish_decompress(&cinfo);
+		pdll->jpeg_destroy_decompress(&cinfo);
+		return EINVAL;
+	}
 	dst->lWidth = cinfo.output_width;
 	dst->lHeight = cinfo.output_height;
 	if (cinfo.output_components==1) {

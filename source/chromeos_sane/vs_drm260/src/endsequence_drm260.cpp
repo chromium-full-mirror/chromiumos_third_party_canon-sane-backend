@@ -59,7 +59,7 @@ public:
 	long get_information(long id, void *pout);
 private:
 	void make_image(ICeiImage** ppOut, long back);
-	void jpeg_decomp(ICeiImage** ppInOut);
+	long jpeg_decomp(ICeiImage** ppInOut);
 	void invert(ICeiImage* pIn);
 	void change_sync(ICeiImage** ppfront, ICeiImage** ppback);
 	long total_size(long back);
@@ -166,7 +166,15 @@ void CFrameworkEndSequence::on_page_end(ICeiMessage* pmsg)
 	try {
 		ICeiImage* pimg = NULL;
 		make_image(&pimg, m_back);
-		jpeg_decomp(&pimg);
+		long ret = jpeg_decomp(&pimg);
+		if (ret != 0) {
+			if (pimg) {
+				pimg->Release();
+			}
+			m_error = VS3_HARDERROR;
+			WriteLog((char*)"CFrameworkEndSequence::on_page_end() end (decomp error %ld)", ret);
+			return;
+		}
 		ceisdk_change_sync((ICeiImage**)&pimg, 1);
 		invert(pimg);
 		m_image[m_back].reset(pimg);
@@ -266,12 +274,13 @@ void CFrameworkEndSequence::make_image(ICeiImage** ppOut, long back)
 	*ppOut = pimg;
 	WriteLog("CFramework::make_image() end");
 }
-void CFrameworkEndSequence::jpeg_decomp(ICeiImage** ppInOut)
+long CFrameworkEndSequence::jpeg_decomp(ICeiImage** ppInOut)
 {
 	ICeiImage* pimg = *ppInOut;
-	if (pimg->comptype()) {
-		ceisdk_jpeg_decomp(ppInOut);
+	if (pimg && pimg->comptype()) {
+		return ceisdk_jpeg_decomp(ppInOut);
 	}
+	return 0;
 }
 void CFrameworkEndSequence::invert(ICeiImage* pimg)
 {
