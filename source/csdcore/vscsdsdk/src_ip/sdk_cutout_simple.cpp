@@ -34,6 +34,16 @@ namespace {
 void ceisdk_cutout_simple(ICeiImage** ppInOut, long x, long y, long w, long h)
 {
 	ICeiImage* pimg = *ppInOut;
+	// Clamp the requested region to the existing buffer so move() never
+	// reads before the allocation or writes past its end.
+	if (x < 0) x = 0;
+	if (y < 0) y = 0;
+	if (w < 0) w = 0;
+	if (h < 0) h = 0;
+	if (x > pimg->width())        x = pimg->width();
+	if (y > pimg->height())       y = pimg->height();
+	if (x + w > pimg->width())    w = pimg->width()  - x;
+	if (y + h > pimg->height())   h = pimg->height() - y;
 	CVSCSDSDKImage* pnew = create_vscsdsdk_image();
 	if (pnew == NULL) return;
 	pnew->width(w);
